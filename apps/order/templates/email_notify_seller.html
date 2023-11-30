@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>MARTK</title>
+
+        <style type="text/css">
+            html {
+                width: 100%;
+            }
+
+            body {
+                width: 100%;
+                font-family: Arial;
+                font-size: 14px;
+                background-color: #869f77;
+                color: #edc4bc;
+            }
+        </style>
+    </head>
+
+    <body>
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td><h1>Novo Pedido</h1></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h3>Detalhes</h3>
+
+                    <b>Nome:</b> {{ order.first_name }} {{ order.last_name }}<br>
+                    <b>Endereço:</b> {{ order.address }}<br>
+                    <b>CEP e complemento:</b> {{ order.zipcode }} {{ order.place }}<br>
+                    <b>E-mail:</b> {{ order.email }}<br>
+                    <b>Telefone:</b> {{ order.phone }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h3>Produtos</h3>
+
+                    <table width="100%" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td><b>Produto</b></td>
+                            <td><b>Preço</b></td>
+                            <td><b>Quantidade</b></td>
+                            <td><b>Total</b></td>
+                        </tr>
+                        
+                        {% for item in order.items.all %}
+                            {% if item.seller == seller %}
+                                <tr>
+                                    <td>{{ item.product.title }}</td>
+                                    <td>${{ item.product.price }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>${{ item.get_total_price }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

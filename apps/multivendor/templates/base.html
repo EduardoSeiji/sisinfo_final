@@ -1,0 +1,77 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+<body class="has-background-lightblue">
+    <nav class="navbar is-light">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item"><strong>MARTK</strong></a>
+    
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+    
+        
+            <div class="navbar-menu" id="main-navbar">
+                <div class="navbar-start">
+                    <div class="navbar-item">
+                        <form method="get" action="{% url 'search' %}">
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <input type="text" class="input" placeholder="Pesquisar..." name="query">
+                                </div>
+                                <div class="control">
+                                    <button class="button is-dark is-uppercase">Buscar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        
+            <div class="navbar-end">
+                {% for category in menu_categories %}
+                        <a href="{% url 'category' category.slug %}" class="navbar-item">{{ category.title }}</a>
+                {% endfor %}
+            
+                <div class="navbar-item">
+                    <a href="{% url 'cart' %}" class="button is-dark">Carrinho{% if cart %} ({{ cart|length }}){% endif %}</a>
+                </div>
+>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="container"></div>
+        {% block content %}
+        {% endblock %}
+    </section>
+    <footer class="footer">
+        <h3 class="is-size-4 mb-4"><strong>MARTK</strong></h3>
+
+        {% if request.user.is_authenticated %}   
+        <a href="{% url 'seller_admin' %}">Perfil de Vendedor</a>
+        {% else %}
+        <a href="{% url 'become_seller' %}">Inscrever-se</a>
+        <br>
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+        <br>
+        <a href="{% url 'sellers' %}">Artistas</a>
+    </footer>
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
