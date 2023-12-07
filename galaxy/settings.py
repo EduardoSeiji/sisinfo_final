@@ -34,7 +34,9 @@ SECRET_KEY = 'django-insecure-rdrzi#jpi5q=ek*cah$10h$*fgwsty03cix3)%m9=-b8t2l-&$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", ".onrender.com"] 
+
+CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com/"]
 
 STRIPE_PUB_KEY = 'pk_test_51IuWjxSE3f2Hhlixj9Oallum2BlJd4uLegOYuWjZLSsT1lVSZoWb662n20CwxVVdtNo8aSaze9eFusyu04zUWOu500noO2YoEp'
 STRIPE_SECRET_KEY = 'sk_test_51IuWjxSE3f2HhlixGskjhHi3HxrY8HcuYSWoErToLgp1oX6A2hWC578F3sV0cyQ1smILbb8xHWkdOR6zCxyq8AJr00OXlbRi83'
