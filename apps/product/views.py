@@ -57,3 +57,41 @@ def category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
 
     return render(request, 'category.html', {'category': category})
+
+
+@api_view(['GET'])
+def getProduct(request):
+    app = Product.objects.all()
+    serializer = DataSerializer(app, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def postProduct(request):
+    serializer = DataSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
+
+@api_view(['PUT'])
+def updateProduct(request, pk):
+    try:
+        app = Product.objects.get(pk=pk)
+    except Product.DoesNotExist:
+        return Response({'error': 'Product not found'}, status=404)
+
+    serializer = DataSerializer(app, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
+
+@api_view(['DELETE'])
+def deleteProduct(request, pk):
+    try:
+        app = Product.objects.get(pk=pk)
+    except Product.DoesNotExist:
+        return Response({'error': 'Product not found'}, status=404)
+
+    app.delete()
+    return Response(status=204)
