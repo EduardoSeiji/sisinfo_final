@@ -9,6 +9,10 @@ from.models import Category, Product
 
 from apps.cart.cart import Cart
 
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializer import DataSerializer
+
 def search(request):
     query = request.GET.get('query', '')
     products = Product.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
